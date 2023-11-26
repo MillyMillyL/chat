@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 function Signup() {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
 
   async function handleSignup(e) {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/User/SignUp", {
-        method: "PUT",
+      const res = await fetch('/api/User/SignUp', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userId,
@@ -21,14 +21,14 @@ function Signup() {
       });
 
       if (!res.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
 
       const data = await res.json();
 
-      console.log("Authentication successful:", data);
+      console.log('Authentication successful:', data);
     } catch (error) {
-      console.error("Error during authentication:", error);
+      console.error('Error during authentication:', error);
     }
   }
   return (
