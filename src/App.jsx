@@ -7,35 +7,34 @@ function App() {
   // console.log(userId);
   // console.log(password);
 
-  function handleSignin(event) {
+  async function handleSignin(event) {
     event.preventDefault();
 
-    // Make a POST request to your authentication endpoint
-    fetch("/api/User/SignIn", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId,
-        password,
-        keepLoggedIn: true,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Handle the successful authentication response
-        console.log("Authentication successful:", data);
-      })
-      .catch((error) => {
-        // Handle errors, such as incorrect credentials
-        console.error("Error during authentication:", error);
+    try {
+      // Make a POST request to your authentication endpoint
+      const res = await fetch("/api/User/SignIn", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          password,
+          keepLoggedIn: true,
+        }),
       });
+
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await res.json();
+
+      console.log("Authentication successful:", data);
+    } catch (error) {
+      // Handle errors, such as incorrect credentials
+      console.error("Error during authentication:", error);
+    }
   }
 
   return (
