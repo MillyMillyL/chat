@@ -30,7 +30,7 @@ function Signin() {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <input type="checkbox" checked />
+        {/* <input type="checkbox" checked /> */}
         <button>Sign In</button>
       </form>
     </div>

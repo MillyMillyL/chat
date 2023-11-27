@@ -1,19 +1,32 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from 'react-router-dom';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
-import Chat from './pages/Chat';
+// import Chat from './pages/Chat';
+import ChatWindow from './components/ChatWindow';
+import Home from './pages/Home';
+import ChatLayout from './layout/ChatLayout';
+// import Header from './components/Header';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<Home />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route element={<ChatLayout />}>
+        <Route path="/chat" element={<ChatWindow />} />
+      </Route>
+    </Route>,
+  ),
+);
+
 function App() {
-  return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path="/signin" Component={Signin} />
-          <Route path="/signup" Component={Signup} />
-          <Route path="/chat" Component={Chat} />
-        </Routes>
-      </div>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
