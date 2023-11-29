@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import FindFriend from './pages/FindFriend';
 // import Chat from './pages/Chat';
 import ChatWindow from './components/ChatWindow';
 import Home from './pages/Home';
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route element={<ChatLayout />}>
         <Route path="/chat" element={<ChatWindow />} />
+        <Route path="/findfriend" element={<FindFriend />} />
       </Route>
     </Route>,
   ),

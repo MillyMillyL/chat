@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useCallback } from 'react';
 
 const AuthContext = createContext();
 
@@ -6,9 +6,9 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [userFriends, setUserFriends] = useState(null);
 
-  async function logIn(userData, e) {
-    e.preventDefault();
+  async function logIn(userData) {
     const { userId, password } = userData;
     try {
       // Make a POST request to your authentication endpoint
@@ -37,8 +37,31 @@ const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
   }
 
+  const fetchUserFriends = useCallback(async () => {
+    try {
+      const res = await fetch('/api/UserFriend/GetUserFriends', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: user.token,
+        },
+        body: JSON.stringify({
+          userId: 'aaa',
+          blocked: false,
+        }),
+      });
+      const data = await res.json();
+
+      setUserFriends(data.data);
+    } catch (error) {
+      alert(error);
+    }
+  }, [user?.token]);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, logIn }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, logIn, fetchUserFriends, userFriends }}
+    >
       {children}
     </AuthContext.Provider>
   );

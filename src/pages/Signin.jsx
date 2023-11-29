@@ -10,7 +10,8 @@ function Signin() {
   const { logIn } = useContext(AuthContext);
 
   async function handleLogIn(e) {
-    await logIn({ userId, password }, e);
+    e.preventDefault();
+    await logIn({ userId, password });
     navigate('/chat');
   }
 

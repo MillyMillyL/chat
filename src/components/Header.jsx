@@ -8,10 +8,10 @@ function Header() {
     <header className="container mx-auto flex flex-row justify-between mb-6">
       <p className="inline-block">Welcome {user?.userId}</p>
       <nav className="flex gap-4">
-        <NavLink href="#">Chat</NavLink>
-        <NavLink href="#">Find Friend</NavLink>
-        <NavLink href="#">Profile</NavLink>
-        <NavLink href="#">Sign Out</NavLink>
+        <NavLink to="/chat">Chat</NavLink>
+        <NavLink to="/findfriend">Find Friend</NavLink>
+        <NavLink to="#">Profile</NavLink>
+        <NavLink to="#">Sign Out</NavLink>
       </nav>
     </header>
   );
