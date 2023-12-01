@@ -6,9 +6,8 @@ function ChatChat() {
         rows="5"
         className="w-[95%] border mx-auto "
         placeholder="enter message"
-      >
-        text
-      </textarea>
+        defaultValue="Enter your message"
+      ></textarea>
       <button>Send</button>
     </div>
   );

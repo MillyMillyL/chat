@@ -2,9 +2,29 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 function FindFriend() {
-  const { user } = useContext(AuthContext);
-  const [friendList, setFriendList] = useState([]);
-  console.log(friendList);
+  const { user, userFriends } = useContext(AuthContext);
+  const [userList, setUserList] = useState([]);
+  console.log(userList);
+  console.log(userFriends);
+  // const userFriendsIds = userFriends.map((friend) => friend.friendUserId);
+  // console.log(userFriendsIds);
+
+  //需优化，可能不需要两个function
+
+  function isFriend(userId) {
+    if (userFriends.some((friend) => friend.friendUserId === userId))
+      return true;
+
+    return false;
+  }
+
+  const friendStatus = (userId) => {
+    const status = userFriends.find(
+      (friend) => friend.friendUserId === userId,
+    ).friendStatus;
+    console.log(status);
+    return status;
+  };
 
   useEffect(
     function () {
@@ -21,9 +41,7 @@ function FindFriend() {
             }),
           });
           const data = await res.json();
-          setFriendList(
-            data.data.filter((friend) => friend.userId !== user.userId),
-          );
+          setUserList(data.data);
         } catch (error) {
           alert(error);
         } finally {
@@ -34,6 +52,7 @@ function FindFriend() {
     },
     [user.token, user.userId],
   );
+
   return (
     <div className="container mx-auto">
       <table className="table-auto border-collapse w-full">
@@ -54,15 +73,21 @@ function FindFriend() {
           </tr>
         </thead>
         <tbody>
-          {friendList.map((friend) => (
-            <tr key={friend.userId}>
-              <td className="px-4 py-2">{friend.userId}</td>
-              <td className="px-4 py-2">{friend.name}</td>
-              <td className="px-4 py-2">{friend.name}</td>
-              <td className="px-4 py-2">{friend.name}</td>
-              <td className="px-4 py-2">{friend.name}</td>
+          {userList.map((user) => (
+            <tr key={user.userId}>
+              <td className="px-4 py-2">{user.userId}</td>
+              <td className="px-4 py-2">{user.name}</td>
+              <td className="px-4 py-2">{user.name}</td>
+              <td className="px-4 py-2">{user.name}</td>
+              <td className="px-4 py-2">{user.name}</td>
               <td className="px-4 py-2">
-                <button>Add Friend</button>
+                <button>
+                  {isFriend(user.userId)
+                    ? friendStatus(user.userId) === 2
+                      ? 'Accepted'
+                      : 'requested'
+                    : 'Add Friend'}
+                </button>
               </td>
             </tr>
           ))}

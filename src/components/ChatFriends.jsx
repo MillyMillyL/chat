@@ -12,9 +12,10 @@ function ChatFriends() {
         <button>Friend Request</button>
       </div>
       <div>
-        {userFriends.map((friend) => (
-          <p key={friend.friendUserId}>{friend.friendName}</p>
-        ))}
+        {userFriends !== null &&
+          userFriends.map((friend) => (
+            <p key={friend.friendUserId}>{friend.friendName}</p>
+          ))}
       </div>
     </div>
   );
