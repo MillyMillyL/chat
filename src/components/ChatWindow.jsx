@@ -4,11 +4,15 @@ import ChatFriends from './ChatFriends';
 import { AuthContext } from '../context/AuthContext';
 
 function ChatWindow() {
-  const { fetchUserFriends } = useContext(AuthContext);
+  const { fetchUserFriends, fetchChatContent } = useContext(AuthContext);
 
   useEffect(() => {
     fetchUserFriends();
   }, [fetchUserFriends]);
+
+  useEffect(() => {
+    fetchChatContent();
+  }, [fetchChatContent]);
 
   return (
     <div className="container grid grid-cols-3 mx-auto">

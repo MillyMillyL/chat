@@ -7,6 +7,8 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [userFriends, setUserFriends] = useState(null);
+  const [chatFriend, setChatFriend] = useState(null);
+  const [chatContent, setChatContent] = useState(null);
 
   async function logIn(userData) {
     const { userId, password } = userData;
@@ -58,9 +60,45 @@ const AuthProvider = ({ children }) => {
     }
   }, [user?.token]);
 
+  const fetchChatContent = useCallback(async () => {
+    try {
+      const res = await fetch('api/ChatMessage/GetUserChatMessage', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: user.token,
+        },
+      });
+      const data = await res.json();
+
+      setChatContent(data.data);
+    } catch (error) {
+      alert(error);
+    }
+  }, [user?.token]);
+
+  const currentChatContent = chatContent
+    ?.filter(
+      (message) =>
+        message?.fromUserId === chatFriend || message?.toUserId === chatFriend,
+    )
+    .slice()
+    .sort((a, b) => a.sendAt - b.sendAt);
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, logIn, fetchUserFriends, userFriends }}
+      value={{
+        isAuthenticated,
+        user,
+        logIn,
+        fetchUserFriends,
+        userFriends,
+        chatFriend,
+        setChatFriend,
+        fetchChatContent,
+        chatContent,
+        currentChatContent,
+      }}
     >
       {children}
     </AuthContext.Provider>
