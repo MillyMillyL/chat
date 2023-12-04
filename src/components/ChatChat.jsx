@@ -22,10 +22,6 @@ function ChatChat() {
             </li>
           ),
         )}
-        {/* {currentChatContent?.map((message) => (
-          <p key={message.id}>{message.sendAt}</p>
-        ))} */}
-        chat window
       </ul>
       <textarea
         rows="5"
