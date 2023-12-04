@@ -4,12 +4,6 @@ import { AuthContext } from '../context/AuthContext';
 function FindFriend() {
   const { user, userFriends } = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
-  console.log(userList);
-  console.log(userFriends);
-  // const userFriendsIds = userFriends.map((friend) => friend.friendUserId);
-  // console.log(userFriendsIds);
-
-  //需优化，可能不需要两个function
 
   function isFriend(userId) {
     if (userFriends.some((friend) => friend.friendUserId === userId))
@@ -22,7 +16,7 @@ function FindFriend() {
     const status = userFriends.find(
       (friend) => friend.friendUserId === userId,
     ).friendStatus;
-    console.log(status);
+
     return status;
   };
 
@@ -77,10 +71,21 @@ function FindFriend() {
             <tr key={user.userId}>
               <td className="px-4 py-2">{user.userId}</td>
               <td className="px-4 py-2">{user.name}</td>
-              <td className="px-4 py-2">{user.name}</td>
-              <td className="px-4 py-2">{user.name}</td>
-              <td className="px-4 py-2">{user.name}</td>
               <td className="px-4 py-2">
+                {user.gender === 0
+                  ? 'NotSet'
+                  : user.gender === 1
+                    ? 'Male'
+                    : user.gender === 2
+                      ? 'Female'
+                      : user.gender === 3
+                        ? 'Unknown'
+                        : 'Unknown Gender'}
+              </td>
+              <td className="px-4 py-2">{user.province}</td>
+              <td className="px-4 py-2">{user.city}</td>
+              <td className="px-4 py-2">
+                {/* need to optimize the status check */}
                 <button>
                   {isFriend(user.userId)
                     ? friendStatus(user.userId) === 2
