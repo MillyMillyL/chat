@@ -16,7 +16,7 @@ function Signin() {
   }
 
   return (
-    <div>
+    <div className="container mx-auto">
       <h1>Please Sign In</h1>
       <form onSubmit={handleLogIn}>
         <input
