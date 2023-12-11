@@ -4,28 +4,25 @@ import { IoCheckmark } from 'react-icons/io5';
 import { IoCheckmarkDone } from 'react-icons/io5';
 
 function ChatChat() {
-  const { currentChatContent, user, chatFriend } = useContext(AuthContext);
+  const { user, chatFriend, friendLiveChatContent, setFriendLiveChatContent } =
+    useContext(AuthContext);
   const [message, setMessage] = useState('');
-  const [friendLiveChatContent, setFriendLiveChatContent] =
-    useState(currentChatContent);
-  console.log(currentChatContent, friendLiveChatContent, user, chatFriend);
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    console.log('action started');
     try {
-      const res = await fetch('/api/ChatMessage/SendMessage', {
+      const res = await fetch('api/ChatMessage/SendMessage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: user.token,
         },
-        body: { toUserId: chatFriend, message: message },
+        body: JSON.stringify({ toUserId: chatFriend, message: message }),
       });
       const data = await res.json();
-      console.log('data sent', data.data);
 
       setFriendLiveChatContent([...friendLiveChatContent, data.data]);
+      setMessage('');
     } catch (error) {
       alert(error);
     }

@@ -5,7 +5,8 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 function ChatFriends() {
   const { userFriends } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('friendsTab');
-  const { chatFriend, setChatFriend } = useContext(AuthContext);
+  const { chatFriend, setChatFriend, getFriendChatContent } =
+    useContext(AuthContext);
 
   return (
     <div>
@@ -38,7 +39,10 @@ function ChatFriends() {
                     ? 'font-bold order-1'
                     : 'order-2'
                 }`}
-                onClick={() => setChatFriend(friend?.friendUserId)}
+                onClick={() => {
+                  setChatFriend(friend?.friendUserId);
+                  getFriendChatContent(friend?.friendUserId);
+                }}
               >
                 {chatFriend === friend.friendUserId && (
                   <IoChatbubbleEllipsesOutline className="inline mr-2" />

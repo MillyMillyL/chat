@@ -77,13 +77,19 @@ const AuthProvider = ({ children }) => {
     }
   }, [user?.token]);
 
-  const currentChatContent = chatContent
-    ?.filter(
-      (message) =>
-        message?.fromUserId === chatFriend || message?.toUserId === chatFriend,
-    )
-    .slice()
-    .sort((a, b) => a.sendAt - b.sendAt);
+  function getFriendChatContent(friendId) {
+    const friendChatContent = chatContent
+      ?.filter(
+        (message) =>
+          message?.fromUserId === friendId || message?.toUserId === friendId,
+      )
+      .slice()
+      .sort((a, b) => a.sendAt - b.sendAt);
+
+    setFriendLiveChatContent(friendChatContent);
+  }
+
+  const [friendLiveChatContent, setFriendLiveChatContent] = useState([]);
 
   return (
     <AuthContext.Provider
@@ -97,7 +103,9 @@ const AuthProvider = ({ children }) => {
         setChatFriend,
         fetchChatContent,
         chatContent,
-        currentChatContent,
+        friendLiveChatContent,
+        setFriendLiveChatContent,
+        getFriendChatContent,
       }}
     >
       {children}
