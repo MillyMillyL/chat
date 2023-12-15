@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
       }
       const data = await res.json();
       setUser(data.data);
+      console.log(data.data);
       alert('Logged in');
     } catch (error) {
       // Handle errors, such as incorrect credentials

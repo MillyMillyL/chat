@@ -1,17 +1,22 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useState } from 'react';
+// import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import useLogin from '../hooks/useLogin';
+import { useLoginQuery } from '../queries/useLoginQuery';
 
 function Signin() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const { logIn } = useContext(AuthContext);
+  // const { logIn } = useContext(AuthContext);
+  const { loginState, loginDispatch } = useLogin();
+  const { data, isloading, error } = useLoginQuery({ userId, password });
+  console.log(loginState, loginDispatch);
 
   async function handleLogIn(e) {
     e.preventDefault();
-    await logIn({ userId, password });
+    loginDispatch('login');
     navigate('/chat');
   }
 

@@ -5,12 +5,12 @@ import { AuthContext } from '../context/AuthContext';
 import { refreshToken } from '../utils/httpFetch';
 
 function ChatLayout() {
-  const { user, setUser } = useContext(AuthContext);
-  console.log('chatLayout', user);
+  const { setUser } = useContext(AuthContext);
+
   useEffect(() => {
     async function refreshLogin() {
       const res = await refreshToken();
-      console.log(res, 'res');
+
       if (res.ok) {
         let result = await res.json();
         let token = result.data.token;
@@ -18,6 +18,7 @@ function ChatLayout() {
         setUser({ token, userId });
       }
     }
+
     refreshLogin();
   }, [setUser]);
 
