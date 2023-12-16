@@ -1,7 +1,6 @@
 import { useState } from 'react';
 // import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import useLogin from '../hooks/useLogin';
 import { useLoginQuery } from '../queries/useLoginQuery';
 
 function Signin() {
@@ -10,14 +9,20 @@ function Signin() {
   const navigate = useNavigate();
 
   // const { logIn } = useContext(AuthContext);
-  const { loginState, loginDispatch } = useLogin();
-  const { data, isloading, error } = useLoginQuery({ userId, password });
-  console.log(loginState, loginDispatch);
+  const { data: loggedUser, login, isLoggingin } = useLoginQuery();
+  console.log(loggedUser, login, isLoggingin);
 
-  async function handleLogIn(e) {
+  function handleLogIn(e) {
     e.preventDefault();
-    loginDispatch('login');
-    navigate('/chat');
+    login(
+      { userId, password },
+      {
+        onSettled: () => {
+          setUserId('');
+          setPassword('');
+        },
+      },
+    );
   }
 
   return (
@@ -37,7 +42,7 @@ function Signin() {
           value={password}
         />
         {/* <input type="checkbox" checked /> */}
-        <button>Sign In</button>
+        <button disabled={isLoggingin}>Sign In</button>
       </form>
     </div>
   );

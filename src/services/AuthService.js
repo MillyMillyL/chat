@@ -19,7 +19,7 @@ export async function remoteLogin(loginData) {
     }
 
     const data = await res.json();
-    console.log(data);
+
     return data.data;
   } catch (error) {
     console.error('Error Logging in: ', error.message);
