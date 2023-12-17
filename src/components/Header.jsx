@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 function Header() {
   const { user } = useContext(AuthContext);
+
   return (
     <header className="container mx-auto flex flex-row justify-between mb-6">
       <p className="inline-block">Welcome {user?.userId}</p>

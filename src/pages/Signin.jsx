@@ -1,20 +1,19 @@
-import { useState } from 'react';
-// import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import { useLoginQuery } from '../queries/useLoginQuery';
+import { AuthContext } from '../context/AuthContext';
 
 function Signin() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
 
   // const { logIn } = useContext(AuthContext);
-  const { data: loggedUser, login, isLoggingin } = useLoginQuery();
-  console.log(loggedUser, login, isLoggingin);
+  const { login } = useLoginQuery();
 
   function handleLogIn(e) {
     e.preventDefault();
-    login(
+
+    const user = login(
       { userId, password },
       {
         onSettled: () => {
@@ -23,6 +22,9 @@ function Signin() {
         },
       },
     );
+
+    console.log(user);
+    setUser(user);
   }
 
   return (
@@ -42,7 +44,7 @@ function Signin() {
           value={password}
         />
         {/* <input type="checkbox" checked /> */}
-        <button disabled={isLoggingin}>Sign In</button>
+        <button>Sign In</button>
       </form>
     </div>
   );

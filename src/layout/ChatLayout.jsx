@@ -6,7 +6,6 @@ import { refreshToken } from '../utils/httpFetch';
 
 function ChatLayout() {
   const { setUser } = useContext(AuthContext);
-
   useEffect(() => {
     async function refreshLogin() {
       const res = await refreshToken();
