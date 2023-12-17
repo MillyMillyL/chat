@@ -1,19 +1,15 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useLoginQuery } from '../queries/useLoginQuery';
-import { AuthContext } from '../context/AuthContext';
 
 function Signin() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const { setUser } = useContext(AuthContext);
-
-  // const { logIn } = useContext(AuthContext);
   const { login } = useLoginQuery();
 
   function handleLogIn(e) {
     e.preventDefault();
 
-    const user = login(
+    login(
       { userId, password },
       {
         onSettled: () => {
@@ -22,9 +18,6 @@ function Signin() {
         },
       },
     );
-
-    console.log(user);
-    setUser(user);
   }
 
   return (
