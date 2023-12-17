@@ -1,5 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { remoteLogin } from '../services/AuthService';
+import {
+  remoteLogin,
+  refreshLogin as remoteRefreshLogin,
+} from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useContext } from 'react';
@@ -23,17 +26,15 @@ export function useLoginQuery() {
       toast.error('Login unsuccessfull, please check and retry');
     },
   });
-
   const { mutate: login } = loginMutate;
 
-  // console.log(login);
+  const refreshLoginMutate = useMutation({
+    mutationFn: remoteRefreshLogin,
+    onSuccess: (data) => {
+      setUser(data);
+    },
+  });
+  const { mutate: refreshLogin } = refreshLoginMutate;
 
-  // const loginQuery = useQuery({
-  //   queryKey: ['user'],
-  //   queryFn: remoteLogin,
-  // });
-
-  // const { data: loggedUser, isLoading: isLoggingIn } = loginQuery;
-
-  return { login };
+  return { login, refreshLogin };
 }

@@ -26,3 +26,19 @@ export async function remoteLogin(loginData) {
     throw error;
   }
 }
+
+export async function refreshLogin() {
+  const requestOptions = {
+    method: 'PUT',
+    mode: 'same-origin', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin',
+  };
+
+  const request = new Request('/api/User/RefreshSignIn', requestOptions);
+  const response = await fetch(request);
+
+  const data = await response.json();
+
+  return data.data;
+}

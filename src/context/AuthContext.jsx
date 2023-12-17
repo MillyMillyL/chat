@@ -64,7 +64,6 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        // isAuthenticated,
         user,
         setUser,
         fetchUserFriends,

@@ -1,25 +1,16 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import Header from '../components/Header';
 import { Outlet } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { refreshToken } from '../utils/httpFetch';
+
+import { useLoginQuery } from '../queries/useLoginQuery';
+// import { refreshToken } from '../utils/httpFetch';
 
 function ChatLayout() {
-  const { setUser } = useContext(AuthContext);
+  // const { setUser } = useContext(AuthContext);
+  const { refreshLogin } = useLoginQuery();
   useEffect(() => {
-    async function refreshLogin() {
-      const res = await refreshToken();
-
-      if (res.ok) {
-        let result = await res.json();
-        let token = result.data.token;
-        let userId = result.data.userId;
-        setUser({ token, userId });
-      }
-    }
-
     refreshLogin();
-  }, [setUser]);
+  }, [refreshLogin]);
 
   return (
     <div>
