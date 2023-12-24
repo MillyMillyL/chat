@@ -8,7 +8,7 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import FindFriend from './pages/FindFriend';
 // import Chat from './pages/Chat';
-import ChatWindow from './components/ChatWindow';
+import Chat from './pages/Chat';
 import Home from './pages/Home';
 import ChatLayout from './layout/ChatLayout';
 // import { useContext } from 'react';
@@ -30,7 +30,7 @@ const router = createBrowserRouter(
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
       <Route element={<ChatLayout />}>
-        <Route path="/chat" element={<ChatWindow />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/findfriend" element={<FindFriend />} />
       </Route>
     </Route>,

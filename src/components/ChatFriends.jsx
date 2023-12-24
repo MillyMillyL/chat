@@ -3,12 +3,24 @@ import { AuthContext } from '../context/AuthContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { useFriends } from '../queries/useFriends';
 
-function ChatFriends() {
+function ChatFriends({ chats, setFriendChats }) {
   const { userFriends } = useFriends();
-  console.log(userFriends);
   const [activeTab, setActiveTab] = useState('friendsTab');
-  const { chatFriend, setChatFriend, getFriendChatContent } =
-    useContext(AuthContext);
+  const { chatFriend, setChatFriend } = useContext(AuthContext);
+
+  function getFriendChatContent(friendId) {
+    const friendChatContent = chats
+      ?.filter(
+        (message) =>
+          message?.fromUserId === friendId || message?.toUserId === friendId,
+      )
+      .slice()
+      .sort((a, b) => a.sendAt - b.sendAt);
+
+    console.log(friendChatContent);
+
+    setFriendChats(friendChatContent);
+  }
 
   return (
     <div>

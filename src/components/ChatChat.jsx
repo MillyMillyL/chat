@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { IoCheckmark } from 'react-icons/io5';
 import { IoCheckmarkDone } from 'react-icons/io5';
 
-function ChatChat() {
+function ChatChat({ friendChats }) {
   const { user, chatFriend, friendLiveChatContent, setFriendLiveChatContent } =
     useContext(AuthContext);
   const [message, setMessage] = useState('');
@@ -31,7 +31,7 @@ function ChatChat() {
   return (
     <div className="col-span-2 border flex flex-col p-2">
       <ul className="min-h-[10rem] max-h-[70vh] overflow-y-auto ">
-        {friendLiveChatContent?.map((message) =>
+        {friendChats?.map((message) =>
           message.fromUserId === user.userId ? (
             <li key={message.id} className="text-right mb-3">
               <p>{message.sendAt} (you)</p>

@@ -19,7 +19,6 @@ export function useLoginQuery() {
     mutationFn: (logindata) => remoteLogin(logindata),
     onSuccess: (data) => {
       setUser(data);
-      console.log(data);
       queryClient.setQueryData(['user'], data);
       navigate('/chat', { replace: true });
       toast.success(`${data.userId} successfully logged in`);
@@ -33,7 +32,10 @@ export function useLoginQuery() {
 
   const refreshLoginMutate = useMutation({
     mutationFn: remoteRefreshLogin,
-    onSuccess: (data) => setUser(data),
+    onSuccess: (data) => {
+      setUser(data);
+      queryClient.setQueryData(['user'], data);
+    },
   });
   const { mutate: refreshLogin } = refreshLoginMutate;
 
