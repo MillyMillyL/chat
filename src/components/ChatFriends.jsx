@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+// import useFriends from '../queries/useFriends';
 
 function ChatFriends() {
   const { userFriends } = useContext(AuthContext);
