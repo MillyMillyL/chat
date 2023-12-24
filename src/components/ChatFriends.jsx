@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-// import useFriends from '../queries/useFriends';
+import { useFriends } from '../queries/useFriends';
 
 function ChatFriends() {
-  const { userFriends } = useContext(AuthContext);
+  const { userFriends } = useFriends();
+  console.log(userFriends);
   const [activeTab, setActiveTab] = useState('friendsTab');
   const { chatFriend, setChatFriend, getFriendChatContent } =
     useContext(AuthContext);
@@ -32,7 +33,7 @@ function ChatFriends() {
       {activeTab === 'friendsTab' && (
         <ul className="p-4 flex flex-col">
           {userFriends !== null &&
-            userFriends.map((friend) => (
+            userFriends?.map((friend) => (
               <li
                 key={friend.friendUserId}
                 className={`cursor-pointer p-1 ${

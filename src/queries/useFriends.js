@@ -3,7 +3,7 @@ import apiFriends from '../services/apiFriends';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
-function useFriends() {
+export function useFriends() {
   const { user } = useContext(AuthContext);
   console.log(user);
   const token = user?.token;
@@ -11,16 +11,15 @@ function useFriends() {
 
   const friendsQuery = useQuery({
     queryKey: ['userFriends'],
-    queryFn: () => {
+    queryFn: async () => {
       console.log(token);
-      apiFriends(token);
+      const friends = await apiFriends(token);
+      return friends;
     },
     enabled: !!token,
   });
 
-  console.log(friendsQuery.data, friendsQuery.error);
+  const { data: userFriends } = friendsQuery;
 
-  return friendsQuery.data;
+  return { userFriends };
 }
-
-export default useFriends;

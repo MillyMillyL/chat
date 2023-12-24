@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import ChatChat from './ChatChat';
 import ChatFriends from './ChatFriends';
 import { AuthContext } from '../context/AuthContext';
-import useFriends from '../queries/useFriends';
+// import useFriends from '../queries/useFriends';
 
 function ChatWindow() {
   const { fetchUserFriends, fetchChatContent } = useContext(AuthContext);
