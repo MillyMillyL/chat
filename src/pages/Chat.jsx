@@ -9,7 +9,7 @@ function Chat() {
 
   return (
     <div className="container grid grid-cols-3 mx-auto">
-      <ChatChat friendChats={friendChats} />
+      <ChatChat friendChats={friendChats} setFriendChats={setFriendChats} />
       <ChatFriends chats={chats} setFriendChats={setFriendChats} />
     </div>
   );

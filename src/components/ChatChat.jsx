@@ -3,9 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import { IoCheckmark } from 'react-icons/io5';
 import { IoCheckmarkDone } from 'react-icons/io5';
 
-function ChatChat({ friendChats }) {
-  const { user, chatFriend, friendLiveChatContent, setFriendLiveChatContent } =
-    useContext(AuthContext);
+function ChatChat({ friendChats, setFriendChats }) {
+  const { user, chatFriend } = useContext(AuthContext);
   const [message, setMessage] = useState('');
 
   const sendMessage = async (e) => {
@@ -21,7 +20,7 @@ function ChatChat({ friendChats }) {
       });
       const data = await res.json();
 
-      setFriendLiveChatContent([...friendLiveChatContent, data.data]);
+      setFriendChats((prev) => [...prev, data.data]);
       setMessage('');
     } catch (error) {
       alert(error);

@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from 'react';
+import { createContext, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -6,24 +6,6 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [chatFriend, setChatFriend] = useState(null);
-  const [chatContent, setChatContent] = useState(null);
-
-  const fetchChatContent = useCallback(async () => {
-    try {
-      const res = await fetch('api/ChatMessage/GetUserChatMessage', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: user.token,
-        },
-      });
-      const data = await res.json();
-
-      setChatContent(data.data);
-    } catch (error) {
-      alert(error);
-    }
-  }, [user?.token]);
 
   const [friendLiveChatContent, setFriendLiveChatContent] = useState([]);
 
@@ -34,8 +16,6 @@ const AuthProvider = ({ children }) => {
         setUser,
         chatFriend,
         setChatFriend,
-        fetchChatContent,
-        chatContent,
         friendLiveChatContent,
         setFriendLiveChatContent,
       }}
