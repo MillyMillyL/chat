@@ -7,8 +7,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [chatFriend, setChatFriend] = useState(null);
 
-  const [friendLiveChatContent, setFriendLiveChatContent] = useState([]);
-
   return (
     <AuthContext.Provider
       value={{
@@ -16,8 +14,6 @@ const AuthProvider = ({ children }) => {
         setUser,
         chatFriend,
         setChatFriend,
-        friendLiveChatContent,
-        setFriendLiveChatContent,
       }}
     >
       {children}

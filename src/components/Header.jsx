@@ -9,6 +9,7 @@ function Header() {
     <header className="container mx-auto flex flex-row justify-between mb-6">
       <p className="inline-block">Welcome {user?.userId}</p>
       <nav className="flex gap-4">
+        <NavLink to="/">Home</NavLink>
         <NavLink to="/chat">Chat</NavLink>
         <NavLink to="/findfriend">Find Friend</NavLink>
         <NavLink to="#">Profile</NavLink>

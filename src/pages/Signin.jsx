@@ -6,7 +6,6 @@ import { useLoginQuery } from '../queries/useLoginQuery';
 function Signin() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  // const { user } = useContext(AuthContext);
   const { login } = useLoginQuery();
 
   function handleLogIn(e) {

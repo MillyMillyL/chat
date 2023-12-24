@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useFriends } from '../queries/useFriends';
+import { useUsers } from '../queries/useUsers';
 
 function FindFriend() {
-  const { user, userFriends } = useContext(AuthContext);
-  const [userList, setUserList] = useState([]);
+  // const { user } = useContext(AuthContext);
+  const { userFriends } = useFriends();
 
   function isFriend(userId) {
     if (userFriends.some((friend) => friend.friendUserId === userId))
@@ -20,32 +20,7 @@ function FindFriend() {
     return status;
   };
 
-  useEffect(
-    function () {
-      const fetchUsers = async () => {
-        try {
-          const res = await fetch('/api/User/SearchFriend', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: user.token,
-            },
-            body: JSON.stringify({
-              searchKeyword: '',
-            }),
-          });
-          const data = await res.json();
-          setUserList(data.data);
-        } catch (error) {
-          alert(error);
-        } finally {
-          console.log('finished fetching users');
-        }
-      };
-      fetchUsers();
-    },
-    [user.token, user.userId],
-  );
+  const users = useUsers();
 
   return (
     <div className="container mx-auto">
@@ -67,7 +42,7 @@ function FindFriend() {
           </tr>
         </thead>
         <tbody>
-          {userList.map((user) => (
+          {users.map((user) => (
             <tr key={user.userId}>
               <td className="px-4 py-2">{user.userId}</td>
               <td className="px-4 py-2">{user.name}</td>

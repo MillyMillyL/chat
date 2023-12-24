@@ -8,6 +8,7 @@ import {
   remoteLogin,
   refreshLogin as remoteRefreshLogin,
 } from '../services/apiAuth';
+
 import { AuthContext } from '../context/AuthContext';
 
 export function useLoginQuery() {
@@ -21,7 +22,6 @@ export function useLoginQuery() {
       setUser(data);
       queryClient.setQueryData(['user'], data);
       navigate('/chat', { replace: true });
-      toast.success(`${data.userId} successfully logged in`);
     },
     onError: (error) => {
       console.log('Login error', error);
