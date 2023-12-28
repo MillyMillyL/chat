@@ -2,35 +2,28 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { IoCheckmark } from 'react-icons/io5';
 import { IoCheckmarkDone } from 'react-icons/io5';
+import { useChat } from '../queries/useChat';
+import { useSendMsg } from '../queries/useSendMsg';
 
-function ChatChat({ friendChats, setFriendChats }) {
+function ChatChat() {
   const { user, chatFriend } = useContext(AuthContext);
   const [message, setMessage] = useState('');
+  const friendChat = useChat(chatFriend);
+  const { sendMsg } = useSendMsg();
 
   const sendMessage = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('api/ChatMessage/SendMessage', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: user.token,
-        },
-        body: JSON.stringify({ toUserId: chatFriend, message: message }),
-      });
-      const data = await res.json();
+    const body = { toUserId: chatFriend, message: message };
 
-      setFriendChats((prev) => [...prev, data.data]);
-      setMessage('');
-    } catch (error) {
-      alert(error);
-    }
+    e.preventDefault();
+    sendMsg({ user: user, body: body });
+
+    setMessage('');
   };
 
   return (
     <div className="col-span-2 border flex flex-col p-2">
       <ul className="min-h-[10rem] max-h-[70vh] overflow-y-auto ">
-        {friendChats?.map((message) =>
+        {friendChat?.map((message) =>
           message.fromUserId === user.userId ? (
             <li key={message.id} className="text-right mb-3">
               <p>{message.sendAt} (you)</p>
