@@ -29,12 +29,14 @@ function Signin() {
         <input
           type="text"
           placeholder="User Id"
+          name="userId"
           onChange={(e) => setUserId(e.target.value)}
           value={userId}
         />
         <input
           type="password"
           placeholder="Password"
+          name="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />

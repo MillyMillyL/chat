@@ -2,7 +2,7 @@ import { useFriends } from '../queries/useFriends';
 import { useUsers } from '../queries/useUsers';
 
 function FindFriend() {
-  // const { user } = useContext(AuthContext);
+  const users = useUsers();
   const { userFriends } = useFriends();
 
   function isFriend(userId) {
@@ -19,8 +19,6 @@ function FindFriend() {
 
     return status;
   };
-
-  const users = useUsers();
 
   return (
     <div className="container mx-auto">
@@ -42,7 +40,7 @@ function FindFriend() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users?.map((user) => (
             <tr key={user.userId}>
               <td className="px-4 py-2">{user.userId}</td>
               <td className="px-4 py-2">{user.name}</td>

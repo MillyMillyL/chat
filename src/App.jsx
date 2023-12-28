@@ -19,7 +19,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route
-        path="/"
+        index
         element={<Home />}
         id="root"
         loader={() => {

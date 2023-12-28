@@ -34,7 +34,8 @@ export function useLoginQuery() {
     mutationFn: remoteRefreshLogin,
     onSuccess: (data) => {
       setUser(data);
-      queryClient.setQueryData(['user'], data);
+      // queryClient.setQueryData(['user'], data);
+      queryClient.invalidateQueries(['user']);
     },
   });
   const { mutate: refreshLogin } = refreshLoginMutate;

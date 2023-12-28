@@ -1,19 +1,18 @@
 import { useContext } from 'react';
-import { NavLink, useRouteLoaderData } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 function Home() {
-  const userId = useRouteLoaderData('root');
   const { user } = useContext(AuthContext);
 
   return (
     <div className="container flex flex-col justify-center items-center">
-      <h1>
-        {userId ? userId : null}, {user?.userId} Welcome to Chat
-      </h1>
+      <h1>Welcome to Chat, {user?.userId ? user?.userId : 'Please Login'}</h1>
       <nav className="mt-6 flex gap-6">
-        <NavLink to="/signin">SignIn</NavLink>
-        <NavLink to="/signup">SignUp</NavLink>
+        {!user && <NavLink to="/signin">SignIn</NavLink>}
+        {!user && <NavLink to="/signup">SignUp</NavLink>}
+        {user && <NavLink to="/chat">Chat</NavLink>}
+        {user && <NavLink to="/findfriend">Find Friend</NavLink>}
       </nav>
     </div>
   );
