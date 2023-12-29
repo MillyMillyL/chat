@@ -1,9 +1,19 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useLogout } from '../queries/useLogout';
 
 function Header() {
   const { user } = useContext(AuthContext);
+  const { LogOut } = useLogout();
+  const navigate = useNavigate();
+
+  function handleSignOut(e) {
+    console.log('lougout event started');
+    e.preventDefault();
+    LogOut();
+    navigate('/');
+  }
 
   return (
     <header className="container mx-auto flex flex-row justify-between mb-6">
@@ -13,7 +23,7 @@ function Header() {
         <NavLink to="/chat">Chat</NavLink>
         <NavLink to="/findfriend">Find Friend</NavLink>
         <NavLink to="#">Profile</NavLink>
-        <NavLink to="#">Sign Out</NavLink>
+        <button onClick={handleSignOut}>Sign Out</button>
       </nav>
     </header>
   );

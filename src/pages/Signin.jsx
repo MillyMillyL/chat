@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useLoginQuery } from '../queries/useLoginQuery';
-// import { useFriends } from '../queries/useFriends';
-// import { AuthContext } from '../context/AuthContext';
 
 function Signin() {
   const [userId, setUserId] = useState('');
