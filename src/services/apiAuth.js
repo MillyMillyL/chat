@@ -42,3 +42,19 @@ export async function refreshLogin() {
 
   return data.data;
 }
+
+export async function signChatOut() {
+  const requestOptions = {
+    method: 'PUT',
+    mode: 'same-origin', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin',
+  };
+
+  const res = await fetch(
+    'http://localhost:8065/api/User/SignChatOut',
+    requestOptions,
+  );
+
+  await res.json();
+}
