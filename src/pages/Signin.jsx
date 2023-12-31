@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useLoginQuery } from '../queries/useLoginQuery';
+import useAuth from '../hooks/useAuth';
 
 function Signin() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useLoginQuery();
+  const { setIsLoggedIn } = useAuth();
 
   function handleLogIn(e) {
     e.preventDefault();
@@ -15,6 +17,7 @@ function Signin() {
         onSettled: () => {
           setUserId('');
           setPassword('');
+          setIsLoggedIn(true);
         },
       },
     );

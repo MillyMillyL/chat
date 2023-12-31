@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogout } from '../queries/useLogout';
+import useAuth from '../hooks/useAuth';
 
 function Header() {
-  const { user } = useContext(AuthContext);
+  const { user, setUser, setIsLoggedIn } = useAuth();
   const { LogOut } = useLogout();
   const navigate = useNavigate();
 
@@ -13,6 +12,8 @@ function Header() {
     e.preventDefault();
     LogOut();
     navigate('/');
+    setUser(null);
+    setIsLoggedIn(false);
   }
 
   return (

@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useState } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { useFriends } from '../queries/useFriends';
+import useAuth from '../hooks/useAuth';
 
 function ChatFriends() {
   const { userFriends } = useFriends();
   const [activeTab, setActiveTab] = useState('friendsTab');
-  const { chatFriend, setChatFriend } = useContext(AuthContext);
+  const { chatFriend, setChatFriend } = useAuth();
 
   // function getFriendChatContent(friendId) {
   //   const friendChatContent = chats

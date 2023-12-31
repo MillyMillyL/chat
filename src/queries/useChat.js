@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import apiChat from '../services/apiChat';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 
 export function useChat(friendId) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const token = user?.token;
 
   const { data: friendChat } = useQuery({

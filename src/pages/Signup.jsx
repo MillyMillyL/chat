@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   async function handleSignup(e) {
     e.preventDefault();
@@ -23,6 +26,10 @@ function Signup() {
       if (!res.ok) {
         throw new Error('Network response was not ok');
       }
+
+      toast.success('Account successfully created, please login!');
+      console.log('account created');
+      navigate('/signin');
 
       const data = await res.json();
 

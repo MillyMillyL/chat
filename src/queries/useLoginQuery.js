@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-
+import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 
 import {
@@ -9,12 +8,10 @@ import {
   refreshLogin as remoteRefreshLogin,
 } from '../services/apiAuth';
 
-import { AuthContext } from '../context/AuthContext';
-
 export function useLoginQuery() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext);
+  const { setUser, setIsLoggedIn } = useAuth();
 
   const loginMutate = useMutation({
     mutationFn: async (logindata) => remoteLogin(logindata),
@@ -33,11 +30,17 @@ export function useLoginQuery() {
   const refreshLoginMutate = useMutation({
     mutationFn: remoteRefreshLogin,
     onSuccess: (data) => {
+      setIsLoggedIn(true);
       setUser(data);
       queryClient.setQueryData(['user'], data);
     },
+    onError: (error) => {
+      setIsLoggedIn(false);
+      setUser(error);
+    },
   });
-  const { mutate: refreshLogin } = refreshLoginMutate;
 
-  return { login, refreshLogin };
+  const { mutate: refreshLogin, isPending } = refreshLoginMutate;
+
+  return { login, refreshLogin, isPending, refreshLoginMutate };
 }
