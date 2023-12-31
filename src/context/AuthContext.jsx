@@ -6,6 +6,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [chatFriend, setChatFriend] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <AuthContext.Provider
@@ -14,6 +15,8 @@ const AuthProvider = ({ children }) => {
         setUser,
         chatFriend,
         setChatFriend,
+        isLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {children}

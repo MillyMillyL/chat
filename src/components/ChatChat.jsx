@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useState } from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { useChat } from '../queries/useChat';
 import { useSendMsg } from '../queries/useSendMsg';
+import useAuth from '../hooks/useAuth';
 
 function ChatChat() {
-  const { user, chatFriend } = useContext(AuthContext);
+  const { user, chatFriend } = useAuth();
   const [message, setMessage] = useState('');
   const friendChat = useChat(chatFriend);
   const { sendMsg } = useSendMsg();
@@ -24,7 +24,7 @@ function ChatChat() {
     <div className="col-span-2 border flex flex-col p-2">
       <ul className="min-h-[10rem] max-h-[70vh] overflow-y-auto ">
         {friendChat?.map((message) =>
-          message.fromUserId === user.userId ? (
+          message.fromUserId === user?.userId ? (
             <li key={message.id} className="text-right mb-3">
               <p>{message.sendAt} (you)</p>
               <p>{message.message}</p>
