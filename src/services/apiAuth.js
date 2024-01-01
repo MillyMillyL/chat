@@ -45,18 +45,23 @@ export async function refreshLogin() {
   return data.data;
 }
 
-export async function signChatOut() {
+export async function signChatOut(token) {
   const requestOptions = {
     method: 'PUT',
     mode: 'same-origin', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
   };
 
-  const res = await fetch(
-    'http://localhost:8065/api/User/SignChatOut',
-    requestOptions,
-  );
+  console.log('sign chat out');
 
-  await res.json();
+  const res = await fetch('/api/User/SignChatOut', requestOptions);
+
+  console.log(res);
+
+  return await res.json();
 }
