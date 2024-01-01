@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
-
 import {
   remoteLogin,
   refreshLogin as remoteRefreshLogin,
@@ -16,7 +15,6 @@ export function useLoginQuery() {
   const loginMutate = useMutation({
     mutationFn: async (logindata) => remoteLogin(logindata),
     onSuccess: (data) => {
-      console.log(data);
       setUser(data);
       queryClient.setQueryData(['user'], data);
       navigate('/chat', { replace: true });
@@ -34,13 +32,14 @@ export function useLoginQuery() {
       setUser(data);
       queryClient.setQueryData(['user'], data);
     },
-    onError: (error) => {
+    onError: () => {
       setIsLoggedIn(false);
-      setUser(error);
+      toast.error('You are not logged in');
+      navigate('/signin');
     },
   });
 
-  const { mutate: refreshLogin, isPending } = refreshLoginMutate;
+  const { mutate: refreshLogin } = refreshLoginMutate;
 
-  return { login, refreshLogin, isPending, refreshLoginMutate };
+  return { login, refreshLogin };
 }

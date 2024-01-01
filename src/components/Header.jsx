@@ -8,7 +8,6 @@ function Header() {
   const navigate = useNavigate();
 
   function handleSignOut(e) {
-    console.log('lougout event started');
     e.preventDefault();
     LogOut();
     navigate('/');

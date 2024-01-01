@@ -10,6 +10,7 @@ function Home() {
       <nav className="mt-6 flex gap-6">
         {!user && <NavLink to="/signin">SignIn</NavLink>}
         {!user && <NavLink to="/signup">SignUp</NavLink>}
+        <NavLink to="/chat">Chat</NavLink>
         {user && <NavLink to="/chat">Chat</NavLink>}
         {user && <NavLink to="/findfriend">Find Friend</NavLink>}
       </nav>
