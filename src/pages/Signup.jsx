@@ -1,42 +1,21 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useSignUp } from '../queries/useSignUp';
+
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const PSW_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 function Signup() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const signUp = useSignUp();
 
   async function handleSignup(e) {
     e.preventDefault();
 
-    try {
-      const res = await fetch('/api/User/SignUp', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId,
-          password,
-          name: userId,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      toast.success('Account successfully created, please login!');
-      console.log('account created');
-      navigate('/signin');
-
-      const data = await res.json();
-
-      console.log('Authentication successful:', data);
-    } catch (error) {
-      console.error('Error during authentication:', error);
-    }
+    signUp({ userId, password });
+    navigate('/signin');
   }
   return (
     <div>

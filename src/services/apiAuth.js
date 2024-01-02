@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast';
+
 export async function remoteLogin(loginData) {
   const { userId, password } = loginData;
 
@@ -64,4 +66,28 @@ export async function signChatOut(token) {
   console.log(res);
 
   return await res.json();
+}
+
+export async function apiSignUp({ userId, password }) {
+  try {
+    const res = await fetch('/api/User/SignUp', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        password,
+        name: userId,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    toast.success('Account successfully created, please login!');
+  } catch (error) {
+    toast.error('Error during authentication:', error);
+  }
 }

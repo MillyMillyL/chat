@@ -22,7 +22,7 @@ function Header() {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/chat">Chat</NavLink>
         <NavLink to="/findfriend">Find Friend</NavLink>
-        <NavLink to="#">Profile</NavLink>
+        <NavLink to="/profile">Profile</NavLink>
         <button onClick={handleSignOut}>Sign Out</button>
       </nav>
     </header>

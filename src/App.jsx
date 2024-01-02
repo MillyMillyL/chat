@@ -12,6 +12,7 @@ import Chat from './pages/Chat';
 import Home from './pages/Home';
 import ChatLayout from './layout/ChatLayout';
 import { Toaster } from 'react-hot-toast';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route element={<ChatLayout />}>
         <Route path="/chat" element={<Chat />} />
         <Route path="/findfriend" element={<FindFriend />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Route>,
   ),
