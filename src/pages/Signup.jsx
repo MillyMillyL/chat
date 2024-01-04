@@ -22,26 +22,22 @@ function Signup() {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
+  const { signUp } = useSignUp();
+
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const signUp = useSignUp();
-
   useEffect(() => {
-    userRef.current.focus();
+    userRef?.current.focus();
   }, []);
 
   useEffect(() => {
     const result = USER_REGEX.test(userId);
-    console.log(result);
-    console.log(userId);
     setValidName(result);
   }, [userId]);
 
   useEffect(() => {
     const result = PSW_REGEX.test(password);
-    console.log(result);
-    console.log(password);
     setValidPsw(result);
     const match = password === matchPsw;
     setValidMatch(match);
@@ -51,7 +47,7 @@ function Signup() {
     setErrMsg('');
   }, [userId, password, matchPsw]);
 
-  function handleSignup(e) {
+  async function handleSignup(e) {
     e.preventDefault();
     //if button enabled with JS hack
     const v1 = USER_REGEX.test(userId);
@@ -60,16 +56,20 @@ function Signup() {
       setErrMsg('Invalid entry');
       return;
     }
-    console.log(userId, password);
 
-    signUp({ userId, password });
-    setSuccess(true);
+    const res = await signUp({ userId, password });
+
+    if (res.code !== 2000) {
+      setErrMsg(res.message);
+    } else {
+      setSuccess(true);
+    }
   }
 
   return (
     <>
       {success ? (
-        <section>
+        <section className="container max-w-[420px] min-h-[400px] mx-auto flex flex-col justify-start p-[1rem] bg-gray-300">
           <h1>Success!</h1>
           <Link to="/signin">Signin</Link>
         </section>

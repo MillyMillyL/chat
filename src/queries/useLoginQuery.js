@@ -19,11 +19,12 @@ export function useLoginQuery() {
       queryClient.setQueryData(['user'], data);
       navigate('/chat', { replace: true });
     },
-    onError: (error) => {
-      toast.error('Login unsuccessfull, please check and retry', error);
-    },
   });
-  const { mutate: login } = loginMutate;
+  const {
+    mutate: login,
+    error: loginError,
+    isError: isLoginError,
+  } = loginMutate;
 
   const refreshLoginMutate = useMutation({
     mutationFn: remoteRefreshLogin,
@@ -41,5 +42,5 @@ export function useLoginQuery() {
 
   const { mutate: refreshLogin } = refreshLoginMutate;
 
-  return { login, refreshLogin };
+  return { login, isLoginError, loginError, refreshLogin };
 }

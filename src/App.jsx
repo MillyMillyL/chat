@@ -33,10 +33,10 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <div>
+    <main>
       <RouterProvider router={router} />
       <Toaster />
-    </div>
+    </main>
   );
 }
 

@@ -1,32 +1,25 @@
-import toast from 'react-hot-toast';
-
 export async function remoteLogin(loginData) {
   const { userId, password } = loginData;
 
-  try {
-    const res = await fetch('/api/User/SignIn', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId,
-        password,
-        keepLoggedIn: true,
-      }),
-    });
+  const res = await fetch('/api/User/SignIn', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+      password,
+      keepLoggedIn: true,
+    }),
+  });
 
-    if (!res.ok) {
-      throw new Error(`Failed to Loggin. Status: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    return data.data;
-  } catch (error) {
-    console.error('Error Logging in: ', error.message);
-    throw error;
+  if (!res.ok) {
+    throw new Error(`Failed to Loggin, ${res.status}: ${res.statusText}`);
   }
+
+  const data = await res.json();
+
+  return data.data;
 }
 
 export async function refreshLogin() {
@@ -63,31 +56,21 @@ export async function signChatOut(token) {
 
   const res = await fetch('/api/User/SignChatOut', requestOptions);
 
-  console.log(res);
-
   return await res.json();
 }
 
 export async function apiSignUp({ userId, password }) {
-  try {
-    const res = await fetch('/api/User/SignUp', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId,
-        password,
-        name: userId,
-      }),
-    });
+  const res = await fetch('/api/User/SignUp', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+      password,
+      name: userId,
+    }),
+  });
 
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    toast.success('Account successfully created, please login!');
-  } catch (error) {
-    toast.error('Error during authentication:', error);
-  }
+  return await res.json();
 }
