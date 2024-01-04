@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import {
@@ -10,6 +10,8 @@ import {
 export function useLoginQuery() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
   const { setUser, setIsLoggedIn } = useAuth();
 
   const loginMutate = useMutation({
@@ -17,7 +19,8 @@ export function useLoginQuery() {
     onSuccess: (data) => {
       setUser(data);
       queryClient.setQueryData(['user'], data);
-      navigate('/chat', { replace: true });
+      console.log(from);
+      navigate(from, { replace: true });
     },
   });
   const {
@@ -33,14 +36,25 @@ export function useLoginQuery() {
       setUser(data);
       queryClient.setQueryData(['user'], data);
     },
-    onError: () => {
+    onError: (err) => {
       setIsLoggedIn(false);
-      toast.error('You are not logged in');
+      toast.error(err.message);
       navigate('/signin');
     },
   });
 
-  const { mutate: refreshLogin } = refreshLoginMutate;
+  const {
+    mutate: refreshLogin,
+    isError: isRefreshLoginError,
+    error: refreshLoginError,
+  } = refreshLoginMutate;
 
-  return { login, isLoginError, loginError, refreshLogin };
+  return {
+    login,
+    isLoginError,
+    loginError,
+    refreshLogin,
+    isRefreshLoginError,
+    refreshLoginError,
+  };
 }

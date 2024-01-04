@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import ChatLayout from './layout/ChatLayout';
 import { Toaster } from 'react-hot-toast';
 import Profile from './pages/Profile';
+import PersistLogin from './layout/PersistLogin';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,10 +23,12 @@ const router = createBrowserRouter(
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
       {/* protected */}
-      <Route element={<ChatLayout />}>
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/findfriend" element={<FindFriend />} />
-        <Route path="/profile" element={<Profile />} />
+      <Route element={<PersistLogin />}>
+        <Route element={<ChatLayout />}>
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/findfriend" element={<FindFriend />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Route>
     </Route>,
   ),

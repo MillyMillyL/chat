@@ -32,8 +32,11 @@ export async function refreshLogin() {
 
   const request = new Request('/api/User/RefreshSignIn', requestOptions);
   const response = await fetch(request);
+  console.log(response);
 
-  if (!response.ok) return Promise.reject(`${response.status} - error`);
+  if (!response.ok) {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
 
   const data = await response.json();
 
