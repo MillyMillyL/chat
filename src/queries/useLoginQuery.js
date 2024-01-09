@@ -11,7 +11,7 @@ export function useLoginQuery() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || '/chat';
   const { setUser, setIsLoggedIn } = useAuth();
 
   const loginMutate = useMutation({
@@ -19,10 +19,13 @@ export function useLoginQuery() {
     onSuccess: (data) => {
       setUser(data);
       queryClient.setQueryData(['user'], data);
+      //TODO: always navigate to home page which should be the page that tried to open which needs login, for example findfriend page.
+      // FIXME:
       console.log(from);
       navigate(from, { replace: true });
     },
   });
+
   const {
     mutate: login,
     error: loginError,
@@ -39,22 +42,16 @@ export function useLoginQuery() {
     onError: (err) => {
       setIsLoggedIn(false);
       toast.error(err.message);
-      navigate('/signin');
+      navigate('/signin', { replace: true });
     },
   });
 
-  const {
-    mutate: refreshLogin,
-    isError: isRefreshLoginError,
-    error: refreshLoginError,
-  } = refreshLoginMutate;
+  const { mutate: refreshLogin } = refreshLoginMutate;
 
   return {
     login,
     isLoginError,
     loginError,
     refreshLogin,
-    isRefreshLoginError,
-    refreshLoginError,
   };
 }

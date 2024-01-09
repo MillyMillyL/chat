@@ -7,6 +7,9 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [chatFriend, setChatFriend] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [persist, setPersist] = useState(
+    JSON.parse(localStorage.getItem('persist') || false),
+  );
 
   return (
     <AuthContext.Provider
@@ -17,6 +20,8 @@ const AuthProvider = ({ children }) => {
         setChatFriend,
         isLoggedIn,
         setIsLoggedIn,
+        persist,
+        setPersist,
       }}
     >
       {children}

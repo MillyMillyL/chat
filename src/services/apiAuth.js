@@ -32,7 +32,6 @@ export async function refreshLogin() {
 
   const request = new Request('/api/User/RefreshSignIn', requestOptions);
   const response = await fetch(request);
-  console.log(response);
 
   if (!response.ok) {
     throw new Error(`${response.status}: ${response.statusText}`);
@@ -54,8 +53,6 @@ export async function signChatOut(token) {
       Authorization: token,
     },
   };
-
-  console.log('sign chat out');
 
   const res = await fetch('/api/User/SignChatOut', requestOptions);
 

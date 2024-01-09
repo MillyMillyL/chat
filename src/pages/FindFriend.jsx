@@ -6,7 +6,7 @@ function FindFriend() {
   const { userFriends } = useFriends();
 
   function isFriend(userId) {
-    if (userFriends.some((friend) => friend.friendUserId === userId))
+    if (userFriends?.some((friend) => friend.friendUserId === userId))
       return true;
 
     return false;

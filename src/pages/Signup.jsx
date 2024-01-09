@@ -22,7 +22,8 @@ function Signup() {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const { signUp } = useSignUp();
+  const { signUp, isError, error } = useSignUp();
+  console.log(isError, error);
 
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
@@ -46,6 +47,10 @@ function Signup() {
   useEffect(() => {
     setErrMsg('');
   }, [userId, password, matchPsw]);
+
+  useEffect(() => {
+    if (isError) setErrMsg(error.message);
+  }, [isError, error?.message]);
 
   async function handleSignup(e) {
     e.preventDefault();

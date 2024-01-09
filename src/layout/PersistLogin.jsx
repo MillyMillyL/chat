@@ -6,20 +6,21 @@ import { Outlet } from 'react-router-dom';
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
   const { refreshLogin } = useLoginQuery();
-  const { user } = useAuth();
+  const { user, persist } = useAuth();
 
   useEffect(() => {
-    const verifyRefreshToken = async () => {
-      await refreshLogin();
+    const verifyRefreshToken = () => {
+      refreshLogin();
     };
+
     !user?.token ? verifyRefreshToken() : setIsLoading(false);
   }, [refreshLogin, user]);
 
-  useEffect(() => {
-    console.log(`isLoading: ${isLoading}`);
-    console.log(`auth: ${JSON.stringify(user?.token)}`);
-  }, [isLoading]);
-  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+  return (
+    <>
+      {!persist ? <Outlet /> : isLoading ? <p>Loading aaaa...</p> : <Outlet />}
+    </>
+  );
 }
 
 export default PersistLogin;

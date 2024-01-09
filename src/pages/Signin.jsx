@@ -12,7 +12,6 @@ function Signin() {
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const { login, isLoginError, loginError } = useLoginQuery();
-  const { setIsLoggedIn } = useAuth();
 
   useEffect(() => {
     userIdRef.current.focus();
@@ -26,14 +25,13 @@ function Signin() {
     if (isLoginError) setErrMsg(loginError.message);
   }, [isLoginError, loginError]);
 
-  function handleLogIn(e) {
+  async function handleLogIn(e) {
     e.preventDefault();
 
     login(
       { userId, password },
       {
         onSuccess: () => {
-          setIsLoggedIn(true);
           toast.success(`${userId}, You are logged in`);
         },
         onSettled: () => {
