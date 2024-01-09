@@ -1,71 +1,156 @@
-import useAuth from '../hooks/useAuth';
+import { useEffect, useState } from 'react';
 import { useUserInfo } from '../queries/useUserInfo';
+import { useUpdateUserInfo } from '../queries/useUpdateUserInfo';
+import useAuth from '../hooks/useAuth';
 
 function Profile() {
   const { user } = useAuth();
-  const userInfo = useUserInfo();
-  console.log(userInfo);
+  const { userInfo, isLoading, isError, error } = useUserInfo();
+  const updateUserInfo = useUpdateUserInfo();
+  const [newUserInfo, setNewUserInfo] = useState({
+    userId: '',
+    password: '',
+    newPassword: '',
+    name: '',
+    gender: 0,
+    province: '',
+    city: '',
+    address: '',
+    phone: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    if (!isLoading && userInfo)
+      setNewUserInfo((prev) => ({ ...prev, ...userInfo }));
+  }, [isLoading, userInfo]);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setNewUserInfo((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    updateUserInfo({ user, newUserInfo });
+  }
 
   return (
-    <form className="container  mx-auto">
-      <div>
-        <label>
-          User Id:
-          <input
-            name="userId"
-            type="text"
-            value={user.userId}
-            onChange={() => {}}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="name">User Name:</label>
-        <input
-          id="name"
-          type="text"
-          value={userInfo?.name}
-          onChange={() => {}}
-        />
-      </div>
-      <div>
-        <label>Gender:</label>
-        <select value={userInfo?.gender} onChange={() => {}}>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div>
-        <label>State:</label>
-        <input type="text" value={userInfo?.state} onChange={() => {}} />
-      </div>
-      <div>
-        <label>City:</label>
-        <input type="text" value={userInfo?.city} onChange={() => {}} />
-      </div>
-      <div>
-        <label>Address:</label>
-        <input type="text" value={userInfo?.address} onChange={() => {}} />
-      </div>
-      <div>
-        <label>Phone Number:</label>
-        <input type="text" value={userInfo?.phoneNumber} onChange={() => {}} />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" value={userInfo?.email} onChange={() => {}} />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" value={userInfo?.password} onChange={() => {}} />
-      </div>
-      <div>
-        <label>New Password:</label>
-        <input type="password" value={userInfo?.password} onChange={() => {}} />
-      </div>
-      <button type="submit">Save Changes</button>
-    </form>
+    <div className="container mx-auto">
+      <h1 className="text-center">Edit Profile</h1>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : isError ? (
+        <p>{error.message}</p>
+      ) : (
+        <form className="flex flex-col gap-1" onSubmit={handleSubmit}>
+          <label>
+            User Id:
+            <input
+              name="userId"
+              type="text"
+              value={newUserInfo.userId}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label>
+            User Name:
+            <input
+              name="name"
+              type="text"
+              value={newUserInfo.name}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label>
+            Gender:
+            <select
+              value={newUserInfo.gender}
+              onChange={handleChange}
+              name="gender"
+            >
+              <option value={1}>Male</option>
+              <option value={2}>Female</option>
+              <option value={0}>Not Set</option>
+            </select>
+          </label>
+
+          <label>
+            State:
+            <input
+              type="text"
+              name="province"
+              value={newUserInfo.province}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label>
+            City:
+            <input
+              type="text"
+              value={newUserInfo.city}
+              onChange={handleChange}
+              name="city"
+            />
+          </label>
+
+          <label>
+            Address:
+            <input
+              type="text"
+              value={newUserInfo.address}
+              onChange={handleChange}
+              name="address"
+            />
+          </label>
+
+          <label>
+            Phone Number:
+            <input
+              name="phone"
+              type="text"
+              value={newUserInfo.phone}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label>
+            Email:
+            <input
+              type="email"
+              value={newUserInfo.email}
+              onChange={handleChange}
+              name="email"
+            />
+          </label>
+
+          <label>
+            Password:
+            <input
+              type="password"
+              value={newUserInfo.password}
+              onChange={handleChange}
+              name="password"
+            />
+          </label>
+
+          <label>
+            New Password:
+            <input
+              type="password"
+              value={newUserInfo.password}
+              onChange={handleChange}
+              name="newPassword"
+            />
+          </label>
+
+          <button type="submit">Save Changes</button>
+        </form>
+      )}
+    </div>
   );
 }
 

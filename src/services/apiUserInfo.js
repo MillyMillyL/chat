@@ -1,4 +1,4 @@
-export async function apiUserInfor(user) {
+export async function apiUserInfo(user) {
   const res = await fetch(`/api/User/GetUserInfo?userId=${user.userId}`, {
     method: 'GET',
     headers: {
@@ -8,5 +8,6 @@ export async function apiUserInfor(user) {
   });
 
   const data = await res.json();
+
   return data.data;
 }
